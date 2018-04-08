@@ -54,19 +54,11 @@ def user_signup():
     if (not verifypassword) or (verifypassword.strip() == ""):
         verifypassword_error = "Please verify password."
 
-    #error = error_msg1  + error_msg2 + error_msg3
-    #if len(error) > 0:
-        #return redirect("/?error=" + error)
-
     #Validation 2:
     if not username_error:
         username_error = validate_field(username)
     if not password_error:
         password_error = validate_field(password)
-
-    #error = error_msg1 + error_msg2
-    #if len(error) > 0:
-        #return redirect("/?error=" + error)
 
     #Validation 3
     if not verifypassword_error:
@@ -76,24 +68,20 @@ def user_signup():
 
     # Validate 4  
     email_error = email_validation(email)
-    #if len(error_msg4)>0:
-        #return redirect("/?error=" + error_msg4)
-
     if not username_error and not password_error and  not verifypassword_error and  not email_error:
-       #message = "Welcome," + username
        return redirect('/welcome?user={0}'.format(username))
     else:
-        return render_template('userform.html',username_error=username_error,password_error=password_error,verifypassword_error=verifypassword_error,email_error=email_error,email=email,username=username)  
+        return render_template('userform.html',title="User_signup",username_error=username_error,password_error=password_error,verifypassword_error=verifypassword_error,email_error=email_error,email=email,username=username)  
 
 @app.route("/")
 def index():
-        # combine all the pieces to build the content of our response
-    return render_template('userform.html') 
+     
+    return render_template('userform.html',title="User_signup") 
  
    
 
 @app.route('/welcome')
 def welcome():
     username= request.args.get('user')
-    return render_template ('welcome.html',username=username)
+    return render_template('welcome.html',title="Welcome User",username=username)
 app.run()
